@@ -1,0 +1,28 @@
+runtime: nodejs20
+service: sanjari-app
+
+# Basic scaling configuration
+automatic_scaling:
+  min_instances: 1
+  max_instances: 3
+
+# Resource allocation
+resources:
+  cpu: 1
+  memory_gb: 1.2
+  disk_size_gb: 10
+
+# Environment variables
+env_variables:
+  NODE_ENV: "production"
+  HOST: "0.0.0.0"
+  PORT: "8080"
+
+# Health checks
+health_check:
+  enable_health_check: true
+  check_interval_sec: 30
+  timeout_sec: 10
+  unhealthy_threshold: 5
+  healthy_threshold: 2
+  restart_threshold: 3

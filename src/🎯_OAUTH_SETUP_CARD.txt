@@ -1,0 +1,174 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                  🎯 GOOGLE OAUTH SETUP CARD                      ║
+║                     (5 MINUTE SETUP)                             ║
+╚══════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────┐
+│ ✅ ALREADY DONE FOR YOU                                          │
+├──────────────────────────────────────────────────────────────────┤
+│ ✅ Removed Facebook OAuth from signup                            │
+│ ✅ Removed Facebook OAuth from login                             │
+│ ✅ Made Google button full width                                 │
+│ ✅ Updated button text to "Continue with Google"                 │
+│ ✅ Code ready - just need credentials!                           │
+└──────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 🎯 YOUR TODO: SETUP GOOGLE OAUTH (2 STEPS)                      │
+└──────────────────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════╗
+║ STEP 1: GET GOOGLE CREDENTIALS (3 minutes)                      ║
+╚══════════════════════════════════════════════════════════════════╝
+
+1️⃣  Go to: https://console.cloud.google.com/apis/credentials
+
+2️⃣  Create Project (if needed):
+   └─ Click: NEW PROJECT
+   └─ Name: Sanjari Prints
+   └─ Click: CREATE
+
+3️⃣  Enable Google+ API:
+   └─ Go to: Library
+   └─ Search: Google+ API
+   └─ Click: ENABLE
+
+4️⃣  Configure Consent Screen:
+   └─ Go to: OAuth consent screen
+   └─ Choose: External
+   └─ App name: Sanjari Prints
+   └─ Email: sanjariprint@gmail.com
+   └─ Click: SAVE AND CONTINUE (3x)
+
+5️⃣  Create OAuth Client:
+   └─ Go to: Credentials tab
+   └─ Click: CREATE CREDENTIALS → OAuth client ID
+   └─ Type: Web application
+   └─ Name: Sanjari Prints Web
+   └─ Redirect URIs: ADD THIS ↓
+
+   ┌────────────────────────────────────────────────────────────┐
+   │ https://hgxhdmcqrcsjsxuaeyrl.supabase.co/auth/v1/callback │
+   │                                                            │
+   │ ⚠️  COPY THIS EXACTLY - NO SPACES OR TYPOS!              │
+   └────────────────────────────────────────────────────────────┘
+
+   └─ Click: CREATE
+
+6️⃣  Copy Credentials:
+   ┌────────────────────────────────────────────────────────────┐
+   │ Client ID: xxxxx.apps.googleusercontent.com                │
+   │ Client Secret: GOCSPX-xxxxx                                │
+   │                                                            │
+   │ 💾 SAVE THESE - YOU NEED THEM IN STEP 2!                  │
+   └────────────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════╗
+║ STEP 2: ADD TO SUPABASE (2 minutes)                             ║
+╚══════════════════════════════════════════════════════════════════╝
+
+1️⃣  Go to:
+   https://supabase.com/dashboard/project/hgxhdmcqrcsjsxuaeyrl/auth/providers
+
+2️⃣  Find "Google" provider:
+   └─ Scroll to "Auth Providers"
+   └─ Find "Google"
+   └─ Click to expand
+
+3️⃣  Enable and Configure:
+   └─ Toggle: Enable Sign in with Google = ✅ ON
+   └─ Paste: Client ID (from Step 1)
+   └─ Paste: Client Secret (from Step 1)
+   └─ Click: SAVE
+
+╔══════════════════════════════════════════════════════════════════╗
+║ ✅ DONE! NOW TEST IT                                             ║
+╚══════════════════════════════════════════════════════════════════╝
+
+Test Signup:
+  1. Go to: http://localhost:5173/signup
+  2. Click: "Continue with Google"
+  3. Choose: Your Google account
+  4. Result: ✅ Account created & logged in!
+
+Test Login:
+  1. Log out
+  2. Go to: http://localhost:5173/login
+  3. Click: "Continue with Google"
+  4. Result: ✅ Logged in immediately!
+
+╔══════════════════════════════════════════════════════════════════╗
+║ 📊 BEFORE & AFTER                                                ║
+╚══════════════════════════════════════════════════════════════════╝
+
+BEFORE (had 2 buttons):
+  ┌──────────┐  ┌──────────┐
+  │ Facebook │  │  Google  │
+  └──────────┘  └──────────┘
+
+AFTER (only Google, full width):
+  ┌────────────────────────────┐
+  │  Continue with Google      │
+  └────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════╗
+║ 🔧 QUICK TROUBLESHOOTING                                         ║
+╚══════════════════════════════════════════════════════════════════╝
+
+Error: "redirect_uri_mismatch"
+  → Check redirect URI in Google Console matches EXACTLY:
+    https://hgxhdmcqrcsjsxuaeyrl.supabase.co/auth/v1/callback
+
+Error: "provider is not enabled"
+  → Go to Supabase → Auth → Providers
+  → Make sure Google toggle is ON
+
+Error: "Invalid client"
+  → Double-check Client ID and Secret in Supabase
+
+╔══════════════════════════════════════════════════════════════════╗
+║ 📝 CHECKLIST                                                     ║
+╚══════════════════════════════════════════════════════════════════╝
+
+  [ ] Created Google OAuth client
+  [ ] Enabled Google+ API
+  [ ] Configured consent screen
+  [ ] Added redirect URI
+  [ ] Copied Client ID
+  [ ] Copied Client Secret
+  [ ] Enabled Google in Supabase
+  [ ] Pasted credentials in Supabase
+  [ ] Saved Supabase settings
+  [ ] Tested signup with Google
+  [ ] Tested login with Google
+  [ ] ✅ WORKING!
+
+╔══════════════════════════════════════════════════════════════════╗
+║ 🎁 BENEFITS                                                      ║
+╚══════════════════════════════════════════════════════════════════╝
+
+  ✅ Faster signup - 1 click instead of form
+  ✅ No password to remember
+  ✅ More secure - Google's security
+  ✅ Auto-verified email
+  ✅ Better user experience
+  ✅ Higher conversion rates
+  ✅ Professional appearance
+
+╔══════════════════════════════════════════════════════════════════╗
+║ 📚 MORE INFO                                                     ║
+╚══════════════════════════════════════════════════════════════════╝
+
+  Quick Setup:  ⚡_GOOGLE_OAUTH_QUICK_SETUP.md
+  Full Guide:   🔑_GOOGLE_OAUTH_SETUP_GUIDE.md
+  UI Changes:   🎨_OAUTH_CHANGES_SUMMARY.md
+
+╔══════════════════════════════════════════════════════════════════╗
+║ 🚀 START NOW!                                                    ║
+║                                                                  ║
+║ 1. Open: https://console.cloud.google.com/apis/credentials      ║
+║ 2. Follow steps above                                           ║
+║ 3. Add credentials to Supabase                                  ║
+║ 4. Test login                                                   ║
+║ 5. Done! 🎉                                                     ║
+╚══════════════════════════════════════════════════════════════════╝
