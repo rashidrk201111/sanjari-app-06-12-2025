@@ -63,27 +63,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Initialize auth state from Supabase session
   useEffect(() => {
     let mounted = true;
+    let timeoutId: NodeJS.Timeout;
 
     async function initializeAuth() {
       try {
+        // Set a timeout to ensure loading doesn't hang forever
+        timeoutId = setTimeout(() => {
+          if (mounted) {
+            console.warn('Auth initialization timed out');
+            setLoading(false);
+          }
+        }, 5000); // 5 second timeout
+
         // Get current session
         const { data: { session }, error } = await supabase.auth.getSession();
-        
+
         if (error) {
           console.error("Error getting session:", error);
-          setLoading(false);
-          return;
         }
 
         if (session?.user && mounted) {
           setSupabaseUser(session.user);
-          await fetchUserProfile(session.user.id);
-          await fetchUserOrders(session.user.id);
+          // Fetch profile in background, don't block loading
+          fetchUserProfile(session.user.id);
+          fetchUserOrders(session.user.id);
         }
       } catch (error) {
         console.error("Error initializing auth:", error);
       } finally {
         if (mounted) {
+          clearTimeout(timeoutId);
+          // Always stop loading after session check
           setLoading(false);
         }
       }
@@ -93,13 +103,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         if (!mounted) return;
 
         if (session?.user) {
           setSupabaseUser(session.user);
-          await fetchUserProfile(session.user.id);
-          await fetchUserOrders(session.user.id);
+          // Fetch profile in background
+          fetchUserProfile(session.user.id);
+          fetchUserOrders(session.user.id);
         } else {
           setSupabaseUser(null);
           setUser(null);
@@ -110,6 +121,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return () => {
       mounted = false;
+      if (timeoutId) clearTimeout(timeoutId);
       subscription.unsubscribe();
     };
   }, []);
